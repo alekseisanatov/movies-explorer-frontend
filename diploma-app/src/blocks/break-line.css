@@ -1,0 +1,11 @@
+.break-line {
+    background: #DADADA;
+    width: 100%;
+    height: 1px;
+}
+
+.break-line_type_dark {
+    background: #424242;
+    width: 100%;
+    height: 1px;
+}

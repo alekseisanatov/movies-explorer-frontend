@@ -1,0 +1,128 @@
+.about {
+    padding: 110px 70px 100px 70px;
+}
+
+.about__wrapper {
+    margin-top: 66px;
+    display: grid;
+    grid-template-columns: 1fr 270px;
+    grid-template-rows: minmax(327px, max-content);
+}
+
+.about__name {
+    margin: 0;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 58px;
+}
+
+.about__developer {
+    margin: 18px 0 0 0;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.about__paragraph {
+    margin: 26px 0 0 0;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    max-width: 600px;
+}
+
+.about__links {
+    list-style-type: none;
+    margin: 99px 0 0 0;
+    padding: 0;
+    display: flex;
+}
+
+.about__link {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 20px;
+    transition: opacity .5s;
+}
+
+.about__image {
+    width: 100%;
+}
+
+.about__link:hover {
+    opacity: .6;
+}
+
+@media screen and (max-width: 1024px) {
+    .about {
+        padding: 90px 50px;
+    }
+    .about__wrapper {
+        grid-template-columns: 1fr 255px;
+        grid-template-rows: 307px;
+    }
+    .about__name {
+        font-size: 40px;
+        line-height: 40px;
+    }
+    .about__developer {
+        margin-top: 16px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .about__paragraph {
+        margin-top: 20px;
+        font-size: 12px;
+        line-height: 18px;
+        max-width: 364px;
+    }
+    .about__link {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .about {
+        padding: 90px 20px;
+    }
+    .about__wrapper {
+        grid-template-columns: 1fr 230px;
+        column-gap: 20px;
+    }
+    .about__links {
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .about {
+        padding: 70px 14px;
+    }
+    .about__wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(292px, max-content) minmax(min-content, max-content);
+        row-gap: 40px;
+    }
+    .about__image-side {
+        grid-row: 1 / 2;
+    }
+    .about__name {
+        font-size: 30px;
+        line-height: 36px;
+        margin-bottom: 20px;
+    }
+    .about__developer {
+        font-size: 11px;
+        line-height: 16px;
+    }
+    .about__paragraph {
+        font-size: 11px;
+        line-height: 16px;
+    }
+    .about__links {
+        margin-top: 40px;
+    }
+}
+
+
