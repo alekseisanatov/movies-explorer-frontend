@@ -1,7 +1,7 @@
 import React from "react";
 import Form from "../Form/Form";
 
-function Login() {
+function Login(props) {
   return(
     <Form
       title={'Рады видеть!'}
@@ -11,6 +11,7 @@ function Login() {
       buttonLinkText={'Зарегистрироваться'}
       buttonLinkPath={'/signup'}
       isRegisterPage={false}
+      onLogin={props.onLogin}
     />
   );
 };

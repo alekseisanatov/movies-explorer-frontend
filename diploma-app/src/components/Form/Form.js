@@ -45,7 +45,7 @@ function FormLoginOrRegister(props) {
             password: '',
           }}
           validationSchema={props.isRegisterPage ? formRegisterSchema : formLoginSchema}
-          onSubmit={props.handleSubmit}
+          onSubmit={props.isRegisterPage ? props.onRegister : props.onLogin}
         >
           {({dirty, isValid}) => (
             <Form className={'form__form'}>

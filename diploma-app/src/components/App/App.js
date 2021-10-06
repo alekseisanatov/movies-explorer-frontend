@@ -23,7 +23,7 @@ function App() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isToolTipAccepted, setToolTipAccepted] = useState(false);
 
-  function handleRegister({name, email, password}) {
+  function handleRegister({ name, email, password }) {
     mainApi.register(name, email, password).then((res) => {
       if(res) {
         openAcceptedPopup();
@@ -37,7 +37,7 @@ function App() {
   }
 
 
-  function handleLogin(email, password) {
+  function handleLogin({ email, password }) {
     mainApi.authorization(email, password)
       .then(() => {
         setLoggedIn(true);
@@ -107,7 +107,7 @@ function App() {
             <Register handleSubmit={handleRegister}/>
           </Route>
           <Route path='/signin'>
-            <Login/>
+            <Login onLogin={handleLogin}/>
           </Route>
           <Route path='/404'>
             <ErrorPage404/>

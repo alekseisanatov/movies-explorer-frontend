@@ -11,7 +11,7 @@ function Register(props) {
       buttonLinkText={'Войти'}
       buttonLinkPath={'/signin'}
       isRegisterPage={true}
-      handleSubmit={props.handleSubmit}
+      onRegister={props.handleSubmit}
     />
   );
 };
