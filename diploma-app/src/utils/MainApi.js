@@ -32,16 +32,16 @@ export const authorization = (email, password) => {
     .then(checkResponse);
 };
 
-// export const getToken = () => {
-//   return fetch(`${BASE_URL}/users/me`, {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     credentials: 'include',
-//   })
-//     .then(checkResponse);
-// }
+export const getToken = () => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  })
+    .then(checkResponse);
+}
 
 export const logout = () => {
   return fetch(`${BASE_URL}/logout`, {

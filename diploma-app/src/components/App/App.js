@@ -42,6 +42,7 @@ function App() {
       .then(() => {
         setLoggedIn(true);
         localStorage.setItem('isAuth', 'true');
+        checkToken();
         history.push('/movies');
       })
       .catch((err) => {
@@ -63,14 +64,14 @@ function App() {
       })
   }
 
-  // function checkToken() {
-  //   mainApi.getToken()
-  //     .then((res) => {
-  //       setCurrentUser(res);
-  //       setLoggedIn(true);
-  //       history.push('/movies');
-  //     })
-  // }
+  function checkToken() {
+    mainApi.getToken()
+      .then((res) => {
+        setCurrentUser(res);
+        setLoggedIn(true);
+        history.push('/movies');
+      })
+  }
 
   // React.useEffect(() => { if(localStorage.getItem('isAuth') !== null) {checkToken()}}, []);
 
