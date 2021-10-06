@@ -18,8 +18,8 @@ import InfoToolTip from "../InfoToolTip/InfoToolTip";
 function App() {
 
   const history = useHistory();
-  const [isLoggedIn, setLoggedIn] = useState(true);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({name: '', email: ''});
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isToolTipAccepted, setToolTipAccepted] = useState(false);
 
@@ -42,7 +42,6 @@ function App() {
       .then(() => {
         setLoggedIn(true);
         localStorage.setItem('isAuth', 'true');
-        checkToken();
         history.push('/movies');
       })
       .catch((err) => {
@@ -64,16 +63,16 @@ function App() {
       })
   }
 
-  function checkToken() {
-    mainApi.getToken()
-      .then((res) => {
-        setCurrentUser(res);
-        setLoggedIn(true);
-        history.push('/movies');
-      })
-  }
+  // function checkToken() {
+  //   mainApi.getToken()
+  //     .then((res) => {
+  //       setCurrentUser(res);
+  //       setLoggedIn(true);
+  //       history.push('/movies');
+  //     })
+  // }
 
-  React.useEffect(() => { if(localStorage.getItem('isAuth') !== null) {checkToken()}}, []);
+  // React.useEffect(() => { if(localStorage.getItem('isAuth') !== null) {checkToken()}}, []);
 
   function openAcceptedPopup() {
     setPopupOpen(true);
