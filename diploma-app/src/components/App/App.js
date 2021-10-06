@@ -23,7 +23,7 @@ function App() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isToolTipAccepted, setToolTipAccepted] = useState(false);
 
-  function handleRegister(name, email, password) {
+  function handleRegister({name, email, password}) {
     mainApi.register(name, email, password).then((res) => {
       if(res) {
         openAcceptedPopup();
@@ -35,6 +35,7 @@ function App() {
         console.log(err);
       })
   }
+
 
   function handleLogin(email, password) {
     mainApi.authorization(email, password)
