@@ -73,7 +73,7 @@ function App() {
       })
   }
 
-  // React.useEffect(() => { if(localStorage.getItem('isAuth') !== null) {checkToken()}}, []);
+  React.useEffect(() => { if(localStorage.getItem('isAuth') !== null) {checkToken()}}, []);
 
   function openAcceptedPopup() {
     setPopupOpen(true);

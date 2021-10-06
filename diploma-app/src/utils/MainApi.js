@@ -38,7 +38,7 @@ export const getToken = () => {
     headers: {
       'Content-Type': 'application/json'
     },
-    credentials: 'include',
+    credentials: 'include'
   })
     .then(checkResponse);
 }
