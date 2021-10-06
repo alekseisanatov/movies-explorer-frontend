@@ -1,9 +1,9 @@
 import React from "react";
-import Form from "../Form/Form";
+import FormLoginOrRegister from "../Form/Form";
 
 function Login(props) {
   return(
-    <Form
+    <FormLoginOrRegister
       title={'Рады видеть!'}
       isNameRequierd={false}
       buttonText={'Войти'}
@@ -12,6 +12,9 @@ function Login(props) {
       buttonLinkPath={'/signup'}
       isRegisterPage={false}
       onLogin={props.onLogin}
+      isAccepted={props.isAccepted}
+      isAcceptedPopupOpen={props.isAcceptedPopupOpen}
+      onClosePopup={props.onClosePopup}
     />
   );
 };

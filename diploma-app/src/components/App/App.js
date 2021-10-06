@@ -13,7 +13,6 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import * as mainApi from '../../utils/MainApi';
-import InfoToolTip from "../InfoToolTip/InfoToolTip";
 
 function App() {
 
@@ -46,7 +45,7 @@ function App() {
         history.push('/movies');
       })
       .catch((err) => {
-        setToolTipAccepted(false);
+        openDeclinedPopup();
         console.log(err);
       })
   }
@@ -75,6 +74,10 @@ function App() {
 
   React.useEffect(() => { if(localStorage.getItem('isAuth') !== null) {checkToken()}}, []);
 
+  function closePopup() {
+    setPopupOpen(false);
+  }
+
   function openAcceptedPopup() {
     setPopupOpen(true);
     setToolTipAccepted(true);
@@ -102,18 +105,21 @@ function App() {
           <ProtectedRoute path={'/profile'}
                           isLoggedIn={isLoggedIn}
                           onSignOut={signOut}
+                          currentUser={currentUser}
                           component={Profile}/>
           <Route path='/signup'>
             <Register handleSubmit={handleRegister}/>
           </Route>
           <Route path='/signin'>
-            <Login onLogin={handleLogin}/>
+            <Login onLogin={handleLogin}
+                   isAcceptedPopupOpen={isPopupOpen}
+                   isAccepted={isToolTipAccepted}
+                   onClosePopup={closePopup}/>
           </Route>
           <Route path='/404'>
             <ErrorPage404/>
           </Route>
         </Switch>
-        <InfoToolTip isAcceptedPopupOpen={isPopupOpen} isAccepted={isToolTipAccepted}/>
       </div>
     </CurrentUserContext.Provider>
   );

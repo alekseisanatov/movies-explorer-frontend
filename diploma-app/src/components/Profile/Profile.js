@@ -21,10 +21,10 @@ function Profile(props) {
     <div className={'profile'}>
       <Header isLoggedIn={true} />
       <div className="profile__wrapper">
-        <h1 className="profile__title">Привет, Виталий!</h1>
+        <h1 className="profile__title">Привет, {props.currentUser.name}!</h1>
         <Formik initialValues={{
-          name: 'Витайлий',
-          email: 'ya@ya.ru',
+          name: props.currentUser.name,
+          email: props.currentUser.email,
         }}
           validationSchema={profileSchema}
           onSubmit={props.onSubmit}

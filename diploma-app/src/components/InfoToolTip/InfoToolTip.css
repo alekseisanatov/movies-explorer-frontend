@@ -25,6 +25,8 @@
   position: absolute;
   background-color: transparent;
   border: 0;
+  z-index: 3;
+  cursor: pointer;
   right: -50px;
   top: -40px;
 }
