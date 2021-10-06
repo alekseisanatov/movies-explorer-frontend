@@ -7,7 +7,7 @@
 .profile__wrapper {
     padding-bottom: 60px;
     margin: 74px auto 0px auto;
-    max-width: 410px;
+    width: 410px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -24,33 +24,56 @@
 
 .profile__info {
     margin: 16px 0;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 70px 1fr;
     width: 100%;
     font-size: 11px;
     line-height: 13px;
 }
 
+.profile__form {
+    width: 100%;
+}
+
 .profile__placeholder {
     font-weight: 500;
     margin: 0;
+    width: 70px;
+}
+
+.profile__error {
+    margin-top: 5px;
+    display: block;
+    color: #EE3465;
+    grid-column: 1 / 3;
 }
 
 .profile__text {
+    padding-bottom: 5px;
+    width: 100%;
+    color: #fff;
     font-weight: normal;
     margin: 0;
+    background-color: transparent;
+    border: 0;
+    text-align: right;
+}
+
+.profile__text:focus {
+    outline: 0;
+    border-bottom: 1px solid #3DDC84;
 }
 
 .profile__button {
+    display: block;
+    margin: 220px auto 16px auto;
     background: transparent;
     color: #fff;
     border: 0;
     cursor: pointer;
-    margin-bottom: 16px;
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
-    margin-top: 220px;
     transition: opacity .5s;
 }
 
@@ -58,12 +81,20 @@
     opacity: .6;
 }
 
+.profile__button:disabled {
+    color: #424242;
+}
+
 .profile__link {
+    display: block;
+    margin: 0 auto;
     color: #EE3465;
     font-weight: 500;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
     font-size: 13px;
     line-height: 16px;
-    text-decoration: none;
     transition: opacity .5s;
 }
 

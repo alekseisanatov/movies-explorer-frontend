@@ -40,13 +40,19 @@
 }
 
 .preloader {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
+    justify-self: center;
     width: 100%;
     height: 100%;
     z-index: 10;
     padding: 20px;
+    grid-column: 1 / 4;
+}
+
+.preloader_active {
+    display: flex;
 }
 
 .preloader__container {
@@ -85,4 +91,17 @@
     z-index: 10;
     background: #3DDC84;
     animation: preloader-inside-red 1s ease-in-out infinite;
+}
+
+@media screen and (max-width: 1280px) {
+    .preloader {
+        grid-column: 1 / 3;
+    }
+}
+
+@media screen and (max-width: 769px) {
+    .preloader {
+        grid-column: 1 / 2;
+        padding: 0;
+    }
 }

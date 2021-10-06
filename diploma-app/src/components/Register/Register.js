@@ -1,9 +1,9 @@
 import React from "react";
-import Form from "../Form/Form";
+import FormLoginOrRegister from "../Form/Form";
 
-function Register() {
+function Register(props) {
   return(
-    <Form
+    <FormLoginOrRegister
       title={'Добро пожаловать!'}
       isNameRequired={true}
       buttonText={'Зарегистрироваться'}
@@ -11,6 +11,7 @@ function Register() {
       buttonLinkText={'Войти'}
       buttonLinkPath={'/signin'}
       isRegisterPage={true}
+      handleSubmit={props.handleSubmit}
     />
   );
 };

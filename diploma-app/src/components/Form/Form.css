@@ -8,10 +8,6 @@
     align-items: center;
 }
 
-.form__wrapper {
-    margin-top: 70px;
-}
-
 .form__title {
     margin: 40px 0 0 0;
     font-weight: 500;
@@ -28,6 +24,7 @@
 }
 
 .form__input {
+    min-height: 20px;
     padding-top: 5px;
     padding-bottom: 10px;
     background: transparent;
@@ -55,6 +52,13 @@
     line-height: 12px;
     color: #8B8B8B;
     min-height: 60px;
+}
+
+.form__input-text {
+    margin-top: 18px;
+    font-size: 10px;
+    line-height: 12px;
+    color: #8B8B8B;
 }
 
 .form__error {
@@ -91,6 +95,10 @@
     line-height: 17px;
     cursor: pointer;
     transition: opacity .5s;
+}
+
+.form__button:disabled {
+    background-color: #7c7c7c;
 }
 
 .form__button:hover {

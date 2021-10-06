@@ -1,0 +1,42 @@
+.info {
+  display: none;
+  background-color: rgba(0,0,0, .2);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.info_active {
+  display: flex;
+}
+
+.info__wrapper {
+  position: relative;
+  background-color: #fff;
+  max-width: 390px;
+  min-height: 290px;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.info__button {
+  position: absolute;
+  background-color: transparent;
+  border: 0;
+  right: -50px;
+  top: -40px;
+}
+
+.info__image {
+  display: block;
+  margin: 30px auto 0 auto;
+  text-align: center;
+}
+
+.info__title {
+  font-size: 34px;
+  line-height: 34px;
+  text-align: center;
+}
