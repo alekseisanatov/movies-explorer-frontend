@@ -74,6 +74,16 @@ function App() {
 
   React.useEffect(() => { if(localStorage.getItem('isAuth') !== null) {checkToken()}}, []);
 
+  function handleEditProfile({ name, email }) {
+    mainApi.updateUser(name, email)
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
   function closePopup() {
     setPopupOpen(false);
   }
@@ -105,7 +115,7 @@ function App() {
           <ProtectedRoute path={'/profile'}
                           isLoggedIn={isLoggedIn}
                           onSignOut={signOut}
-                          currentUser={currentUser}
+                          onEditProfile={handleEditProfile}
                           component={Profile}/>
           <Route path='/signup'>
             <Register handleSubmit={handleRegister}/>

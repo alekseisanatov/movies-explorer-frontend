@@ -65,18 +65,19 @@ export const getUserInfo = () => {
     .then(checkResponse);
 }
 
-export const updateUser = () => {
+export const updateUser = (name , email) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json'
     },
     credentials: 'include',
+    body: JSON.stringify({ name,email }),
   })
     .then(checkResponse);
 }
 
-export const getFilms = () => {
+export const getSavedFilms = () => {
   return fetch(`${BASE_URL}/saved-movies`, {
     method: 'GET',
     headers: {
@@ -87,7 +88,7 @@ export const getFilms = () => {
     .then(checkResponse);
 }
 
-export const likeMovie = () => {
+export const addMovie = () => {
   return fetch(`${BASE_URL}/:filmId`, {
     method: 'PATCH',
     headers: {

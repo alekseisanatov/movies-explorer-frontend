@@ -1,11 +1,13 @@
 import React from "react";
 import Header from "../Header/Header";
-import {Link} from "react-router-dom";
 import './Profile.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 
 function Profile(props) {
+  const currentUser = React.useContext(CurrentUserContext);
+
   const profileSchema = Yup.object().shape({
     name: Yup.string()
       .min(2, 'Минимальное кол-во символов 2')
@@ -21,13 +23,13 @@ function Profile(props) {
     <div className={'profile'}>
       <Header isLoggedIn={true} />
       <div className="profile__wrapper">
-        <h1 className="profile__title">Привет, {props.currentUser.name}!</h1>
+        <h1 className="profile__title">Привет, {currentUser.name}!</h1>
         <Formik initialValues={{
-          name: props.currentUser.name,
-          email: props.currentUser.email,
+          name: currentUser.name,
+          email: currentUser.email,
         }}
           validationSchema={profileSchema}
-          onSubmit={props.onSubmit}
+          onSubmit={props.onEditProfile}
         >
           {({dirty, isValid}) => (
             <Form className={'profile__form'}>
