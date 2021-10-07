@@ -5,7 +5,6 @@ import FilmFilter from "../FilmFilter/FilmFilter";
 
 
 function MoviesCardList(props) {
-  const [isFilmsFound, setFilmsFound] = React.useState(false);
   const [notFoundText, setNotFoundText] = React.useState(false);
 
   return (
