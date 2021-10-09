@@ -13,7 +13,7 @@ function InfoToolTip(props) {
         </button>
         <img className={'info__image'} src={props.isAccepted ? acceptedImage : declinedImage} alt="Статус"/>
         <h2 className={'info__title'}>
-          {props.isAccepted ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте еще раз.'}
+          {props.isAccepted ? 'Все прошло успешно!' : 'Что-то пошло не так! Попробуйте еще раз.'}
         </h2>
       </div>
     </div>

@@ -4,6 +4,7 @@ import './Profile.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
+import InfoToolTip from "../InfoToolTip/InfoToolTip";
 
 function Profile(props) {
   const currentUser = React.useContext(CurrentUserContext);
@@ -54,6 +55,7 @@ function Profile(props) {
           )}
         </Formik>
       </div>
+      <InfoToolTip isAccepted={props.isAccepted} isAcceptedPopupOpen={props.isAcceptedPopupOpen} onClosePopup={props.onClosePopup}/>
     </div>
   )
 };

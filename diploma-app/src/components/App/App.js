@@ -89,14 +89,18 @@ function App() {
     }
   }, [])
 
-  React.useEffect(() => { if(localStorage.getItem('isAuth') !== null) {checkToken()}}, []);
+  useEffect(() => {
+    if(localStorage.getItem('isAuth') !== null) {checkToken()}
+    }, []);
 
   function handleEditProfile({ name, email }) {
     mainApi.updateUser(name, email)
       .then((res) => {
         setCurrentUser(res);
+        openAcceptedPopup();
       })
       .catch((err) => {
+        openDeclinedPopup();
         console.log(err);
       })
   }
@@ -245,10 +249,6 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Switch>
-          <ProtectedRoute exact
-                          path={'/'}
-                          isLoggedIn={isLoggedIn}
-                          component={Main}/>
           <ProtectedRoute path={'/movies'}
                           isLoggedIn={isLoggedIn}
                           onSearch={handleSearch}
@@ -269,9 +269,17 @@ function App() {
                           component={SavedMovies}/>
           <ProtectedRoute path={'/profile'}
                           isLoggedIn={isLoggedIn}
+                          isAcceptedPopupOpen={isPopupOpen}
+                          isAccepted={isToolTipAccepted}
+                          onClosePopup={closePopup}
                           onSignOut={signOut}
                           onEditProfile={handleEditProfile}
                           component={Profile}/>
+          <Route >
+            <Main exact
+                  path={'/'}
+                  isLoggedIn={isLoggedIn}/>
+          </Route>
           <Route path='/signup'>
             <Register handleSubmit={handleRegister}/>
           </Route>
@@ -281,9 +289,7 @@ function App() {
                    isAccepted={isToolTipAccepted}
                    onClosePopup={closePopup}/>
           </Route>
-          <Route path='/404'>
-            <ErrorPage404/>
-          </Route>
+          <Route component={ErrorPage404} />
         </Switch>
       </div>
     </CurrentUserContext.Provider>
