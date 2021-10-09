@@ -154,13 +154,11 @@ function App() {
   }
 
   useEffect(() => {
+    if(isLoggedIn) {
       getAllFilms();
       getSavedFilms();
-  }, []);
-
-  useEffect(() => {
-    getSavedFilms();
-  }, []);
+    }
+  }, [isLoggedIn]);
 
   const filterFilms = (movies, searchInput) => {
     if (searchInput) {
@@ -275,11 +273,6 @@ function App() {
                           onSignOut={signOut}
                           onEditProfile={handleEditProfile}
                           component={Profile}/>
-          <Route >
-            <Main exact
-                  path={'/'}
-                  isLoggedIn={isLoggedIn}/>
-          </Route>
           <Route path='/signup'>
             <Register handleSubmit={handleRegister}/>
           </Route>
@@ -288,6 +281,11 @@ function App() {
                    isAcceptedPopupOpen={isPopupOpen}
                    isAccepted={isToolTipAccepted}
                    onClosePopup={closePopup}/>
+          </Route>
+          <Route >
+            <Main exact
+                  path={'/'}
+                  isLoggedIn={isLoggedIn}/>
           </Route>
           <Route component={ErrorPage404} />
         </Switch>
