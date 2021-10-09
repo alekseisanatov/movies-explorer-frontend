@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './App.css';
 import '../../vendor/normalize.css';
 import '../../vendor/fonts/fonts.css';
@@ -13,6 +13,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import * as mainApi from '../../utils/MainApi';
+import {getFilms} from "../../utils/MoviesApi";
 
 function App() {
 
@@ -21,6 +22,12 @@ function App() {
   const [currentUser, setCurrentUser] = useState({name: '', email: ''});
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isToolTipAccepted, setToolTipAccepted] = useState(false);
+  const [allFilms, setAllFilms] = useState([]);
+  const [fetchError, setFetchError] = useState('');
+  const [searchError, setSearchError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [filteredFilms, setFilteredFilms] = useState([]);
+  const [savedFilms, setSavedFilms] = useState([]);
 
   function handleRegister({ name, email, password }) {
     mainApi.register(name, email, password).then((res) => {
@@ -98,6 +105,81 @@ function App() {
     setToolTipAccepted(false);
   }
 
+  const getAllFilms = () => {
+    getFilms()
+      .then((res) => {
+        const allFilmsInfo = res.map((movie) => {
+          return {
+            ...movie,
+          };
+        });
+        localStorage.setItem('allMovies', JSON.stringify(allFilmsInfo));
+        setAllFilms(allFilmsInfo);
+      })
+      .catch((err) => {
+        localStorage.removeItem('allMovies');
+        setFetchError('При запросе произошла ошибка, повторите позже.');
+        console.log(err);
+      })
+  };
+
+  const getSavedFilms = () => {
+    mainApi.getSavedFilms()
+      .then((res) => {
+        const savedFilms = res.map((movie) => {
+          return {
+            ...movie,
+          };
+        });
+        localStorage.setItem('savedMovies', JSON.stringify(savedFilms));
+        setSavedFilms(savedFilms);
+      })
+      .catch((err) => {
+        localStorage.removeItem('savedMovies');
+        setFetchError('Во время запроса произошла ошибка, попробуйте позже');
+      })
+  }
+
+  useEffect(() => {
+      getAllFilms();
+  }, [allFilms]);
+
+  const filterFilms = (movies, searchInput) => {
+    if (searchInput) {
+      const regex = new RegExp(searchInput, 'gi');
+      const filterData = movies.filter((item) => regex.test(item.nameRU) || regex.test(item.nameEN));
+      if (filterData.length === 0) {
+        setSearchError(' Ничего не найдено');
+      } else {
+        setSearchError('');
+        localStorage.setItem('filteredMovies', JSON.stringify(filterData));
+      }
+      return filterData;
+    }
+    return [];
+  }
+
+  useEffect(() => {
+    if(localStorage.getItem('filteredMovies')) {
+      setFilteredFilms(JSON.parse(localStorage.getItem('filteredMovies')));
+    } else {
+      return;
+    }
+    if(localStorage.getItem('savedFilms')) {
+      setSavedFilms(JSON.parse(localStorage.getItem('savedFilms')));
+    } else {
+      return;
+    }
+  }, [isLoading]);
+
+  const handleSearch = (searchInput) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setFilteredFilms(filterFilms(allFilms, searchInput));
+      setIsLoading(false);
+    }, 1000);
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -108,9 +190,17 @@ function App() {
                           component={Main}/>
           <ProtectedRoute path={'/movies'}
                           isLoggedIn={isLoggedIn}
+                          onSearch={handleSearch}
+                          isLoading={isLoading}
+                          searchError={searchError}
+                          movies={filteredFilms}
                           component={Movies}/>
           <ProtectedRoute path={'/saved-movies'}
                           isLoggedIn={isLoggedIn}
+                          onSearch={handleSearch}
+                          isLoading={isLoading}
+                          searchError={searchError}
+                          movies={savedFilms}
                           component={SavedMovies}/>
           <ProtectedRoute path={'/profile'}
                           isLoggedIn={isLoggedIn}

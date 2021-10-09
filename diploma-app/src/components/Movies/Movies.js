@@ -1,56 +1,37 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './Movies.css';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import SearchForm from "./SearchForm/SearchForm";
-import * as apiMovies from "../../utils/MoviesApi";
+import {shortFilmDuration} from "../../utils/constants";
 
-function Movies(props) {
-  const [movies, setMovies] = React.useState([]);
-  const [preloaderActive, setPreloaderActive] = React.useState(false);
-  const [filmTextActive, setFilmTextActive] = React.useState(true);
-  const [filmsInput, setFilmInput] = React.useState('');
-  const [filmsInputToSearch, setFilmsInputToSearch] = React.useState('');
+function Movies({isLoading, isSavedMoviesPage, movies, searchError, onSearch }) {
   const [isShortFilmChecked, setShortFilmChecked] = React.useState(false);
 
-  function getCards() {
-    apiMovies.getFilms()
-      .then((res) => {
-        setMovies(res);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setPreloaderActive(false)
-      })
+  const filterShortFilms = (moviesFilter) => {
+    const moviesArr = moviesFilter.filter((item) => item.duration <= shortFilmDuration);
+    return moviesArr;
   };
 
-   function handleSubmit(e) {
-     setMovies([]);
-    e.preventDefault();
-    setFilmTextActive(false);
-    setPreloaderActive(true);
-    setFilmsInputToSearch(filmsInput);
-    getCards();
+  const toggleCheckbox = () =>  {
+    setShortFilmChecked(!isShortFilmChecked);
   }
 
-  function handleInput(e) {
-    setFilmInput(e.target.value);
-  }
-
-  function toggleCheckbox() {
-    if(isShortFilmChecked === true) {
-      setShortFilmChecked(false);
-    } else {
-      setShortFilmChecked(true);
-    }
-  }
+  useEffect(() => {
+    filterShortFilms(movies);
+  }, [isShortFilmChecked]);
 
   return (
     <div className={'movies'}>
       <Header isLoggedIn={true} />
-      <SearchForm toggleCheckbox={toggleCheckbox} shortFilmCheckbox={isShortFilmChecked} filmsInputValue={filmsInput} onInputChange={handleInput} onSubmit={handleSubmit} />
-      <MoviesCardList isShortFilmChecked={isShortFilmChecked} filmInput={filmsInputToSearch} isPreloaderActive={preloaderActive} isFilmTextActive={filmTextActive} movies={movies} isSavedMoviesPage={props.isSavedMoviesPage} />
+      <SearchForm toggleCheckbox={toggleCheckbox}
+                  shortFilmCheckbox={isShortFilmChecked}
+                  onSubmit={onSearch} />
+      <MoviesCardList searchError={searchError}
+                      isLoading={isLoading}
+                      movies={isShortFilmChecked ? filterShortFilms(movies) : movies}
+                      isSavedMoviesPage={isSavedMoviesPage} />
       <Footer />
     </div>
   );

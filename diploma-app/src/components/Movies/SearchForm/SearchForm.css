@@ -17,6 +17,17 @@
     background: #424242;
 }
 
+.search__wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.search__error {
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+}
+
 .search__left {
     display: grid;
     align-items: center;
