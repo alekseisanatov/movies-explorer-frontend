@@ -6,7 +6,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import SearchForm from "./SearchForm/SearchForm";
 import {shortFilmDuration} from "../../utils/constants";
 
-function Movies({isLoading, isSavedMoviesPage, movies, searchError, onSearch }) {
+function Movies({isLoading, isSavedMoviesPage, movies, searchError, onSearch, isMovieAdded, onMovieClick}) {
   const [isShortFilmChecked, setShortFilmChecked] = React.useState(false);
 
   const filterShortFilms = (moviesFilter) => {
@@ -30,6 +30,8 @@ function Movies({isLoading, isSavedMoviesPage, movies, searchError, onSearch }) 
                   onSubmit={onSearch} />
       <MoviesCardList searchError={searchError}
                       isLoading={isLoading}
+                      isMovieAdded={isMovieAdded}
+                      onMovieClick={onMovieClick}
                       movies={isShortFilmChecked ? filterShortFilms(movies) : movies}
                       isSavedMoviesPage={isSavedMoviesPage} />
       <Footer />

@@ -1,32 +1,45 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './MoviesCard.css';
-import DeleteFilm from '../../../images/delete-film.svg';
-import SavedFilm from '../../../images/film-saved.svg';
+import MovieButton from "../../Buttons/MovieButton";
+import MovieDeleteButton from "../../Buttons/MovieDeleteButton";
 
-function MoviesCard(props) {
-  function toggleFilmSave(e) {
-    const button = e.currentTarget;
-    const buttonText = button.querySelector('.card__button-text');
-    const buttonSaveLogo = button.querySelector('.card__button-save');
-    buttonSaveLogo.classList.toggle('card__button-save_active');
-    buttonText.classList.toggle('card__button-text_hide');
-    button.classList.toggle('card__button_active');
+function MoviesCard({movie, isMovieAdded, onMovieClick, isSavedMoviesPage}) {
+  const {nameRU, duration, trailerLink, trailer, image} = movie;
+
+  let isAdded;
+
+  if(!isSavedMoviesPage) {
+    isAdded = isMovieAdded(movie);
+  } else {
+    isAdded = false;
+  }
+
+  useEffect(() => {
+
+  }, [isSavedMoviesPage]);
+
+  const handleMovieClick = (e) => {
+    e.preventDefault();
+    onMovieClick(movie, !isAdded);
+  }
+
+  const removeMovie = () => {
+    onMovieClick(movie, false);
   }
 
   return(
     <div className={'card'}>
       <div className="card__header">
-        <h2 className={'card__title'}>{props.title}</h2>
-        <p className="card__duration">{props.duration} минуты</p>
+        <h2 className={'card__title'}>{nameRU}</h2>
+        <p className="card__duration">{duration} минуты</p>
       </div>
-      <a href={props.link} target="_blank" rel="noreferrer" className="card__image">
-        <img className={'card__image-img'} src={`https://api.nomoreparties.co${props.image}`} alt={props.title}/>
+      <a href={isSavedMoviesPage ? trailer : trailerLink} target="_blank" rel="noreferrer" className="card__image">
+        <img className={'card__image-img'} src={isSavedMoviesPage ? `${String(image)}` : `https://api.nomoreparties.co${image.url}`} alt={nameRU}/>
       </a>
-      <button onClick={toggleFilmSave} className={`card__button`}>
-        <p className={`card__button-text ${props.isSavedMoviesPage ? 'card__button-text_hide' : ''}`}>Сохранить</p>
-        <img src={SavedFilm} alt="Фильм сохранен" className="card__button-save"/>
-        <img src={DeleteFilm} alt="Удалить фильм" className={`card__button-delete ${props.isSavedMoviesPage ? 'card__button-delete_active' : ''}`}/>
-      </button>
+      {isSavedMoviesPage
+        ? <MovieDeleteButton removeMovie={removeMovie}/>
+        : <MovieButton isAdded={isAdded} onClick={handleMovieClick} />
+      }
     </div>
   );
 };

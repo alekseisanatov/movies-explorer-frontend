@@ -4,10 +4,23 @@ import Preloader from "../Preloader/Preloader";
 import { desktopWidth, tabletWidth} from "../../../utils/constants";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList({movies, isLoading, searchError}) {
+function MoviesCardList({movies, isLoading, searchError, isSavedMoviesPage, isMovieAdded, onMovieClick}) {
   const [currentCount, setCurrentCount] = useState(0);
   const [extraFilmNumber, setExtraFilmNumber] = useState(3);
   const [moviesRender, setMoviesRender] = useState([]);
+  const [isItFirstTimeOnPage, setItIsFirstTimeOnPage] = useState(true);
+
+  useEffect(() => {
+    if(localStorage.getItem('filteredMovies') || isLoading) {
+      setItIsFirstTimeOnPage(false);
+    }
+  }, [])
+
+  useEffect(() => {
+    if(localStorage.getItem('filteredMovies') || isLoading) {
+      setItIsFirstTimeOnPage(false);
+    }
+  }, [isLoading])
 
   const getCountData = (windowWidth) => {
     if (windowWidth < tabletWidth) {
@@ -44,7 +57,7 @@ function MoviesCardList({movies, isLoading, searchError}) {
     const count = Math.min(movies.length, getCountData(windowSize).firstRender);
     setMoviesRender(movies.slice(0, count));
     setCurrentCount(count);
-  }, [movies]);
+  }, [movies, onMovieClick]);
 
   return (
     <>
@@ -53,20 +66,35 @@ function MoviesCardList({movies, isLoading, searchError}) {
       </div>
         <div className={'card-list'}>
           <Preloader isActive={isLoading}/>
-          {!isLoading && (
+          {searchError === '' && isItFirstTimeOnPage && !isSavedMoviesPage && <div className={'card-list__empty card-list__empty_active'}>Введите название фильма</div>}
+          {!isLoading && !isSavedMoviesPage && (
             <div className="card-list__movies">
               {moviesRender.map((movie) => {
                 return <MoviesCard key={movie.id}
-                                   title={movie.nameRU}
-                                   duration={movie.duration}
-                                   image={movie.image.url}
-                                   link={movie.trailerLink} />
+                                   movie={movie}
+                                   isMovieAdded={isMovieAdded}
+                                   onMovieClick={onMovieClick}
+                                   isSavedMoviesPage={isSavedMoviesPage}/>
               })}
               {searchError !== '' && !isLoading && <h3 className={'card-list__empty card-list__empty_active'}>{searchError}</h3>}
             </div>
           )}
+          {!isLoading && isSavedMoviesPage &&
+            (
+              <div className={'card-list__movies'}>
+                {movies.map((movie) => {
+                  return <MoviesCard key={Math.random(0, 1500)}
+                                     movie={movie}
+                                     onMovieClick={onMovieClick}
+                                     isMovieAdded={isMovieAdded}
+                                     isSavedMoviesPage={isSavedMoviesPage}/>
+                })}
+                {searchError !== '' && !isLoading && <h3 className={'card-list__empty card-list__empty_active'}>{searchError}</h3>}
+              </div>
+            )
+          }
         </div>
-      {currentCount < movies.length && <button className={`card-list__button`} onClick={renderExtraFilms}>Ещё</button>}
+      {currentCount < movies.length && !isSavedMoviesPage && !isLoading && <button className={`card-list__button`} onClick={renderExtraFilms}>Ещё</button>}
     </>
   );
 };

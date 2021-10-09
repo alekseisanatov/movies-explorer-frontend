@@ -11,7 +11,7 @@ import Portfolio from "./Portfolio/Portfolio";
 function Main(props) {
   return (
     <main className="main">
-      <Promo isLoggedIn={props.loggedIn} />
+      <Promo isLoggedIn={props.isLoggedIn} />
       <AboutProject />
       <Techs />
       <AboutMe />

@@ -78,7 +78,7 @@ export const updateUser = (name , email) => {
 }
 
 export const getSavedFilms = () => {
-  return fetch(`${BASE_URL}/saved-movies`, {
+  return fetch(`${BASE_URL}/movies`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -88,24 +88,25 @@ export const getSavedFilms = () => {
     .then(checkResponse);
 }
 
-export const addMovie = () => {
-  return fetch(`${BASE_URL}/:filmId`, {
-    method: 'PATCH',
+export const addMovie = (movie) => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    credentials: 'inlude',
+    credentials: 'include',
+    body: JSON.stringify(movie)
   })
     .then(checkResponse);
 }
 
-export const deleteMovie = () => {
-  return fetch(`${BASE_URL}/:filmId`, {
+export const deleteMovie = (id) => {
+  return fetch(`${BASE_URL}/movies/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
     },
-    credentials: 'inlude',
+    credentials: 'include',
   })
     .then(checkResponse);
 }

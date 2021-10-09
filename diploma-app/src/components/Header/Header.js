@@ -46,7 +46,7 @@ function Header(props) {
         </button>
           <div className="header__burger-main">
             <Link to={'/'} className={'header__burger-link'}>Главная</Link>
-            <Link to={'/movies'} className={'header__burger-link header__burger-link_active'}>Фильмы</Link>
+            <Link to={'/movies'} className={'header__burger-link'}>Фильмы</Link>
             <Link to={'/saved-movies'} className={'header__burger-link'}>Сохраненные фильмы</Link>
           </div>
           <Link className="header__account-burger" to={'/profile'}>

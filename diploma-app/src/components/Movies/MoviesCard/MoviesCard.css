@@ -63,12 +63,13 @@
     line-height: 11px;
 }
 
-.card__button:hover {
-    opacity: .6;
+.card__button-save {
+    padding: 2px 26px;
+    display: none;
 }
 
-.card__button-save {
-    display: none;
+.card__button:hover {
+    opacity: .6;
 }
 
 .card__button-delete {
