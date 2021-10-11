@@ -67,7 +67,7 @@ function App() {
         setCurrentUser(null);
         setAllFilms([]);
         setFilteredFilms([]);
-        history.push('/signin');
+        history.push('/');
       })
       .catch((err) => {
         console.log(err);
@@ -82,12 +82,6 @@ function App() {
         history.push('/movies');
       })
   }
-
-  useEffect(() => {
-    if(localStorage.getItem('isAuth')) {
-      setLoggedIn(true);
-    }
-  }, [])
 
   useEffect(() => {
     if(localStorage.getItem('isAuth') !== null) {checkToken()}
@@ -142,7 +136,8 @@ function App() {
       .then((res) => {
         const savedFilms = res.map((movie) => {
           return {
-            ...movie
+            ...movie,
+            id: movie.movieId
           };
         });
         setSavedFilms(savedFilms);
@@ -253,6 +248,7 @@ function App() {
                           isLoading={isLoading}
                           searchError={searchError}
                           movies={filteredFilms}
+                          fetchError={fetchError}
                           isMovieAdded={checkIsMovieAdded}
                           onMovieClick={handleMovieClick}
                           component={Movies}/>
@@ -261,6 +257,7 @@ function App() {
                           onSearch={handleSearch}
                           isLoading={isLoading}
                           searchError={searchError}
+                          fetchError={fetchError}
                           movies={savedFilms}
                           isMovieAdded={checkIsMovieAdded}
                           onMovieClick={handleMovieClick}
