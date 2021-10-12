@@ -19,7 +19,7 @@ function App() {
 
   const history = useHistory();
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({name: '', email: ''});
+  const [currentUser, setCurrentUser] = useState();
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isToolTipAccepted, setToolTipAccepted] = useState(false);
   const [allFilms, setAllFilms] = useState([]);
@@ -28,6 +28,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [filteredFilms, setFilteredFilms] = useState([]);
   const [savedFilms, setSavedFilms] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   function handleRegister({ name, email, password }) {
     mainApi.register(name, email, password).then((res) => {
@@ -49,6 +50,7 @@ function App() {
         setLoggedIn(true);
         localStorage.setItem('isAuth', 'true');
         checkToken();
+        getSavedFilms();
         history.push('/movies');
       })
       .catch((err) => {
@@ -67,6 +69,7 @@ function App() {
         setCurrentUser(null);
         setAllFilms([]);
         setFilteredFilms([]);
+        setPopupOpen(false);
         history.push('/');
       })
       .catch((err) => {
@@ -87,14 +90,17 @@ function App() {
     if(localStorage.getItem('isAuth') !== null) {checkToken()}
     }, []);
 
-  function handleEditProfile({ name, email }) {
+  function handleEditProfile({ name, email }, {resetForm}) {
     mainApi.updateUser(name, email)
       .then((res) => {
+        setIsSubmitted(true);
         setCurrentUser(res);
         openAcceptedPopup();
+        resetForm();
       })
       .catch((err) => {
         openDeclinedPopup();
+        setIsSubmitted(false);
         console.log(err);
       })
   }
@@ -126,7 +132,6 @@ function App() {
       })
       .catch((err) => {
         localStorage.removeItem('allMovies');
-        setFetchError('При запросе произошла ошибка, повторите позже.');
         console.log(err);
       })
   };
@@ -134,26 +139,31 @@ function App() {
   const getSavedFilms = () => {
     mainApi.getSavedFilms()
       .then((res) => {
-        const savedFilms = res.map((movie) => {
-          return {
-            ...movie,
-            id: movie.movieId
-          };
-        });
-        setSavedFilms(savedFilms);
+        const savedMovies = res.filter((movie) => {
+          if(movie.owner === currentUser._id) {
+            return {
+              ...movie,
+              id: movie.movieId
+            };
+          }
+        })
+        setSavedFilms(savedMovies);
       })
       .catch((err) => {
-        setFetchError('Во время запроса произошла ошибка, попробуйте позже');
         console.log(err);
       })
   }
 
   useEffect(() => {
-    if(isLoggedIn) {
-      getAllFilms();
-      getSavedFilms();
-    }
-  }, [isLoggedIn]);
+      if(isLoggedIn) {
+        getAllFilms();
+        getSavedFilms();
+      }
+  }, [currentUser]);
+
+  useEffect(() => {
+    getAllFilms();
+  }, [])
 
   const filterFilms = (movies, searchInput) => {
     if (searchInput) {
@@ -215,16 +225,17 @@ function App() {
     })
   }
 
-  const removeFilmFromFavorites = (movie) => {
+  const removeFilmFromFavorites = (movie, isSavedPage) => {
     const oldSavedFilms = savedFilms;
     console.log(movie);
     console.log(savedFilms);
-    const movieToDelete = savedFilms.find((m) => m.movieId === movie.movieId);
-    setSavedFilms(savedFilms.filter((m) => m.movieId !== movie.movieId));
+    const movieToDelete = savedFilms.find((m) => m.movieId === String(isSavedPage ? movie.movieId : movie.id));
+
 
     mainApi.deleteMovie(movieToDelete._id)
       .then(() => {
         console.log('deleted');
+        setSavedFilms(savedFilms.filter((m) => m.movieId !== String(isSavedPage ? movie.movieId : movie.id)));
       })
       .catch((err) => {
         setSavedFilms(oldSavedFilms);
@@ -232,8 +243,8 @@ function App() {
       })
   }
 
-  const handleMovieClick = (movie, isLiked) => {
-    {isLiked ? addFilmToFavorite(movie) : removeFilmFromFavorites(movie)}
+  const handleMovieClick = (movie, isLiked, isSavedPage) => {
+    {isLiked ? addFilmToFavorite(movie) : removeFilmFromFavorites(movie, isSavedPage)}
   }
 
   const checkIsMovieAdded = (movie) => savedFilms.some((item) => item.movieId === String(movie.id));
@@ -263,15 +274,19 @@ function App() {
                           onMovieClick={handleMovieClick}
                           component={SavedMovies}/>
           <ProtectedRoute path={'/profile'}
-                          isLoggedIn={isLoggedIn}
-                          isAcceptedPopupOpen={isPopupOpen}
                           isAccepted={isToolTipAccepted}
+                          isAcceptedPopupOpen={isPopupOpen}
                           onClosePopup={closePopup}
+                          isSubmitted={isSubmitted}
+                          isLoggedIn={isLoggedIn}
                           onSignOut={signOut}
                           onEditProfile={handleEditProfile}
                           component={Profile}/>
           <Route path='/signup'>
-            <Register handleSubmit={handleRegister}/>
+            <Register handleSubmit={handleRegister}
+                      isAccepted={isToolTipAccepted}
+                      isAcceptedPopupOpen={isPopupOpen}
+                      onClosePopup={closePopup}/>
           </Route>
           <Route path='/signin'>
             <Login onLogin={handleLogin}

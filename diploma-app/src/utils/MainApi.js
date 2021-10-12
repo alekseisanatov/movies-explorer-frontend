@@ -54,16 +54,6 @@ export const logout = () => {
     .then(checkResponse);
 }
 
-export const getUserInfo = () => {
-  return fetch(`${BASE_URL}/users/me`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    credentials: 'include',
-  })
-    .then(checkResponse);
-}
 
 export const updateUser = (name , email) => {
   return fetch(`${BASE_URL}/users/me`, {

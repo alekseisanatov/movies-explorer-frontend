@@ -14,17 +14,13 @@ function MoviesCard({movie, isMovieAdded, onMovieClick, isSavedMoviesPage}) {
     isAdded = false;
   }
 
-  useEffect(() => {
-
-  }, [isSavedMoviesPage]);
-
   const handleMovieClick = (e) => {
     e.preventDefault();
-    onMovieClick(movie, !isAdded);
+    onMovieClick(movie, !isAdded, isSavedMoviesPage);
   }
 
   const removeMovie = () => {
-    onMovieClick(movie, false);
+    onMovieClick(movie, false, isSavedMoviesPage);
   }
 
   return(
@@ -38,7 +34,7 @@ function MoviesCard({movie, isMovieAdded, onMovieClick, isSavedMoviesPage}) {
       </a>
       {isSavedMoviesPage
         ? <MovieDeleteButton removeMovie={removeMovie}/>
-        : <MovieButton isAdded={isAdded} onClick={handleMovieClick} />
+        : <MovieButton isAdded={isAdded} onClick={handleMovieClick} onClickRemove={removeMovie}/>
       }
     </div>
   );

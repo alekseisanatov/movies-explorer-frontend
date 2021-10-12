@@ -12,6 +12,9 @@ function Register(props) {
       buttonLinkPath={'/signin'}
       isRegisterPage={true}
       onRegister={props.handleSubmit}
+      isAccepted={props.isAccepted}
+      isAcceptedPopupOpen={props.isAcceptedPopupOpen}
+      onClosePopup={props.onClosePopup}
     />
   );
 };

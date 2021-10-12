@@ -77,6 +77,7 @@ function MoviesCardList({movies, isLoading, searchError, isSavedMoviesPage, isMo
                                    isSavedMoviesPage={isSavedMoviesPage}/>
               })}
               {searchError !== '' && !isLoading && <h3 className={'card-list__empty card-list__empty_active'}>{searchError}</h3>}
+              {movies.length === 0 && !isLoading && !isItFirstTimeOnPage && <h3 className={'card-list__empty card-list__empty_active'}>{'Ничего не найдено'}</h3>}
             </div>
           )}
           {!isLoading && isSavedMoviesPage &&
@@ -90,6 +91,7 @@ function MoviesCardList({movies, isLoading, searchError, isSavedMoviesPage, isMo
                                      isSavedMoviesPage={isSavedMoviesPage}/>
                 })}
                 {searchError !== '' && !isLoading && <h3 className={'card-list__empty card-list__empty_active'}>{searchError}</h3>}
+                {movies.length === 0 && !isLoading && !isItFirstTimeOnPage && <h3 className={'card-list__empty card-list__empty_active'}>{'Ничего не найдено'}</h3>}
               </div>
             )
           }

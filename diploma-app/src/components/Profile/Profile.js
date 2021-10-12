@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Header from "../Header/Header";
 import './Profile.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -49,7 +49,7 @@ function Profile(props) {
                   {msg => <div className={'profile__error'}>{msg}</div>}
                 </ErrorMessage>
               </div>
-              <button className={'profile__button'} disabled={!isValid || !dirty}>Редактировать</button>
+              <button type={'submit'} className={'profile__button'} disabled={!isValid || !dirty}>Редактировать</button>
               <button onClick={props.onSignOut} className={'profile__link'}>Выйти из аккаунта</button>
             </Form>
           )}

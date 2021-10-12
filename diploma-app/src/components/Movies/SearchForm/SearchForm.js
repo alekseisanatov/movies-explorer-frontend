@@ -3,7 +3,7 @@ import './SearchForm.css';
 import SearchLogo from '../../../images/seacrh-icon.svg';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-function SearchForm({onSubmit, toggleCheckbox, shortFilmCheckbox, fetchError}) {
+function SearchForm({onSubmit, toggleCheckbox, shortFilmCheckbox}) {
   const [searchInput, setSearchInput] = useState('');
   const [inputError, setInputError] = useState('');
   const isFilmsAreInLocalStorage = JSON.parse(localStorage.getItem('filteredMovies'));
