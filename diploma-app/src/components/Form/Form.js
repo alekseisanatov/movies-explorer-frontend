@@ -68,7 +68,7 @@ function FormLoginOrRegister(props) {
               <ErrorMessage name={'password'}>
                 {msg => <div className={'form__error'}>{msg}</div>}
               </ErrorMessage>
-              <button className="form__button" disabled={!isValid || !dirty}>{props.buttonText}</button>
+              <button type={'submit'} className="form__button" disabled={!isValid || !dirty}>{props.buttonText}</button>
               <div className="form__lower-links">
                 <span className="form__button_type_text">{props.buttonLowerText}</span>
                 <span className="form__button_type_link">
