@@ -90,13 +90,14 @@ function App() {
     if(localStorage.getItem('isAuth') !== null) {checkToken()}
     }, []);
 
-  function handleEditProfile({ name, email }, {resetForm}) {
+  function handleEditProfile({ name, email }, {resetForm, setFieldValue}) {
     mainApi.updateUser(name, email)
       .then((res) => {
-        setIsSubmitted(true);
         setCurrentUser(res);
         openAcceptedPopup();
-        resetForm();
+        resetForm({
+          values: {name: name, email: email},
+        });
       })
       .catch((err) => {
         openDeclinedPopup();
