@@ -9,7 +9,7 @@ function Footer() {
         </p>
        <div className="break-line_type_dark"></div>
       <div className="footer__lower-wrapper">
-        <p className="footer__year">© 2020</p>
+        <p className="footer__year">© 2021</p>
         <div className="footer__links">
           <a className="footer__link" target={'_blank'} rel={'noreferrer'} href="https://practicum.yandex.ru/">Яндекс.Практикум</a>
           <a className="footer__link" target={'_blank'} rel={'noreferrer'} href="https://github.com/alekseisanatov?tab=repositories">Github</a>
