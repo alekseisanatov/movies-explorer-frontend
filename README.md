@@ -1,6 +1,5 @@
 # movies-explorer-frontend
 Yac-diploma frontend
-
 #
 [Ссылка на проект-фронт](https://sanatov.nomoredomains.monster/)
 #
