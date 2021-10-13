@@ -70,6 +70,7 @@ function App() {
         setAllFilms([]);
         setFilteredFilms([]);
         setPopupOpen(false);
+        setToolTipAccepted(false);
         history.push('/');
       })
       .catch((err) => {
@@ -90,7 +91,7 @@ function App() {
     if(localStorage.getItem('isAuth') !== null) {checkToken()}
     }, []);
 
-  function handleEditProfile({ name, email }, {resetForm, setFieldValue}) {
+  function handleEditProfile({ name, email }, {resetForm}) {
     mainApi.updateUser(name, email)
       .then((res) => {
         setCurrentUser(res);
@@ -252,6 +253,11 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Switch>
+          <Route >
+            <Main exact
+                  path={'/'}
+                  isLoggedIn={isLoggedIn}/>
+          </Route>
           <ProtectedRoute path={'/movies'}
                           isLoggedIn={isLoggedIn}
                           onSearch={handleSearch}
@@ -293,12 +299,9 @@ function App() {
                    isAccepted={isToolTipAccepted}
                    onClosePopup={closePopup}/>
           </Route>
-          <Route >
-            <Main exact
-                  path={'/'}
-                  isLoggedIn={isLoggedIn}/>
+          <Route>
+            <ErrorPage404/>
           </Route>
-          <Route component={ErrorPage404} />
         </Switch>
       </div>
     </CurrentUserContext.Provider>
