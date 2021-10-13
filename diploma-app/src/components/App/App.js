@@ -33,8 +33,8 @@ function App() {
   function handleRegister({ name, email, password }) {
     mainApi.register(name, email, password).then((res) => {
       if(res) {
-        openAcceptedPopup();
-        history.push('/signin');
+        handleLogin({email, password});
+        history.push('/movies');
       }
     })
       .catch((err) => {
@@ -228,8 +228,6 @@ function App() {
 
   const removeFilmFromFavorites = (movie, isSavedPage) => {
     const oldSavedFilms = savedFilms;
-    console.log(movie);
-    console.log(savedFilms);
     const movieToDelete = savedFilms.find((m) => m.movieId === String(isSavedPage ? movie.movieId : movie.id));
 
 
