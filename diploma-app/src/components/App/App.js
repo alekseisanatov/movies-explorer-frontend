@@ -253,11 +253,6 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Switch>
-          <Route >
-            <Main exact
-                  path={'/'}
-                  isLoggedIn={isLoggedIn}/>
-          </Route>
           <ProtectedRoute path={'/movies'}
                           isLoggedIn={isLoggedIn}
                           onSearch={handleSearch}
@@ -298,6 +293,11 @@ function App() {
                    isAcceptedPopupOpen={isPopupOpen}
                    isAccepted={isToolTipAccepted}
                    onClosePopup={closePopup}/>
+          </Route>
+          <Route >
+            <Main exact
+                  path={'/'}
+                  isLoggedIn={isLoggedIn}/>
           </Route>
           <Route>
             <ErrorPage404/>

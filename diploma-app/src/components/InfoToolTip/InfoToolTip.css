@@ -43,3 +43,13 @@
   text-align: center;
   color: #202020;
 }
+
+@media screen and (max-width: 576px){
+  .info__wrapper {
+    max-width: 240px;
+  }
+  .info__button {
+    right: 0;
+    top: -50px;
+  }
+}
