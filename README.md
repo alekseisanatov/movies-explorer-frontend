@@ -1,6 +1,20 @@
-# movies-explorer-frontend
-Yac-diploma frontend
+# Yac-diploma project
+
+## The main problem that solve this project is to find some film to watch it and you can save it to your movie-list.
+
+### Techs that were used in this project
+
++ React
++ NodeJS
++ ExpressJs
+
+### Basic function 
++ Make your own account
++ Find movie
++ Save or delete movies in your movie list
++ Change Acc info
+
 #
-[Ссылка на проект-фронт](https://sanatov.nomoredomains.monster/)
+[Frontend Link](https://sanatov.nomoredomains.monster/)
 #
-[Ссылка на проект-бэк](https://api.sanatov.nomoredomains.monster/)
+[Backend-link](https://api.sanatov.nomoredomains.monster/)
