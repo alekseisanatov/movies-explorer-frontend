@@ -10,7 +10,7 @@ function AboutMe() {
       <div className="about__wrapper">
         <div className="about__text-side">
           <h3 className="about__name">Алексей</h3>
-          <h4 className="about__developer">Фронтенд-разработчик, 22 лет</h4>
+          <h4 className="about__developer">Фронтенд-разработчик, 22 года</h4>
           <p className="about__paragraph">Я родился и живу в Риге. Развиваюсь как Фронтенд разработчик, закончил факультет Веб-разработки в Яндекс Практикуме. И начинаю свой путь в IT. Инетересуюсь новыми технологиями, особенно в машинной сфере. Играю в футбол и теннис, это мои основные хобби. </p>
           <ul className="about__links">
             <li className="about__list-item">
